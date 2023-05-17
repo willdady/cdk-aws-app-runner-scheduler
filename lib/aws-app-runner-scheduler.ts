@@ -51,6 +51,7 @@ export class AwsAppRunnerScheduler extends Construct {
           'apprunner:ListTagsForResource',
           'apprunner:PauseService',
         ],
+        resources: ['*'],
       }),
     );
 
@@ -72,6 +73,7 @@ export class AwsAppRunnerScheduler extends Construct {
           'apprunner:ListTagsForResource',
           'apprunner:ResumeService',
         ],
+        resources: ['*'],
       }),
     );
 
