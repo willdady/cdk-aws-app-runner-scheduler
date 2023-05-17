@@ -9,6 +9,8 @@ export interface AwsAppRunnerSchedulerProps {
   /**
    * Tag used to match AWS App Runner services against. All matching services
    * will be paused/resumed on the schedule defined by `pauseCronOptions` and `resumeCronOptions`
+   *
+   * Note, key and value are case-sensitive.
    */
   serviceTag: {
     key: string;

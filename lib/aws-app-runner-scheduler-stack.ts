@@ -6,10 +6,10 @@ export class AwsAppRunnerSchedulerStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new AwsAppRunnerScheduler(this, 'ProjectAcmeScheduler', {
+    new AwsAppRunnerScheduler(this, 'ExampleScheduler', {
       serviceTag: {
-        key: 'project',
-        value: 'acme',
+        key: 'environment',
+        value: 'development',
       },
       pauseCronOptions: {
         hour: '2',

@@ -22,13 +22,13 @@ npm run cdk -- deploy AwsAppRunnerScheduler
 
 This project defines `AwsAppRunnerScheduler`, a custom CDK construct which pauses/resumes any AWS App Runner services matching the provided tag on the provided schedule.
 
-For example, the following will pause ALL AWS App Runner services tagged with key `project` and value `acme` at 02:00 UTC and resume (unpause) the service at 21:00 UTC daily. **Remember**, cron options are in **UTC time** *not* your local time.
+For example, the following will pause ALL AWS App Runner services tagged with key `environment` and value `development` at 02:00 UTC and resume (unpause) the service at 21:00 UTC daily. 
 
 ```typescript
-  new AwsAppRunnerScheduler(this, 'ProjectAcmeScheduler', {
+  new AwsAppRunnerScheduler(this, 'ExampleScheduler', {
     serviceTag: {
-      key: 'project',
-      value: 'acme',
+      key: 'environment',
+      value: 'development',
     },
     pauseCronOptions: {
       hour: '2',
@@ -40,3 +40,6 @@ For example, the following will pause ALL AWS App Runner services tagged with ke
     },
   });
 ```
+
+Note, cron options are in **UTC time** *not* your local time.
+Also, `serviceTag.key` and `serviceTag.value` are **case-sensitive**.
