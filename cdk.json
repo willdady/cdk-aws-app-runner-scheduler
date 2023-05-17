@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/aws-app-runner-scheduler.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/cdk-aws-app-runner-scheduler.ts",
   "watch": {
     "include": [
       "**"
