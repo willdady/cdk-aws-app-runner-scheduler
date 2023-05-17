@@ -15,6 +15,11 @@ export const handler = async () => {
     for (const service of page.ServiceSummaryList || []) {
       log(`Listing tags on AWS App Runner service '${service.ServiceArn!}'`);
       const tags = await getServiceTags(service.ServiceArn!);
+      log(
+        `Found ${
+          tags.length
+        } tags on AWS App Runner service '${service.ServiceArn!}'`,
+      );
       for (const tag of tags) {
         try {
           if (tag.Key === SERVICE_TAG_KEY && tag.Value === SERVICE_TAG_VALUE) {
