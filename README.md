@@ -32,9 +32,11 @@ For example, the following will pause ALL AWS App Runner services tagged with ke
     },
     pauseCronOptions: {
       hour: '2',
+      minute: '0',
     },
     resumeCronOptions: {
       hour: '21',
+      minute: '0',
     },
   });
 ```

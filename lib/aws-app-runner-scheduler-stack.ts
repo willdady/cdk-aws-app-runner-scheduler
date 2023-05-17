@@ -13,9 +13,11 @@ export class AwsAppRunnerSchedulerStack extends cdk.Stack {
       },
       pauseCronOptions: {
         hour: '2',
+        minute: '0',
       },
       resumeCronOptions: {
         hour: '21',
+        minute: '0',
       },
     });
   }
