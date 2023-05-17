@@ -25,7 +25,7 @@ export const handler = async () => {
           if (tag.Key === SERVICE_TAG_KEY && tag.Value === SERVICE_TAG_VALUE) {
             if (service.Status !== 'RUNNING') {
               throw new Error(
-                `Can not pause AWS App Runner service '${service.ServiceArn}' because it is not running`,
+                `Can not pause AWS App Runner service '${service.ServiceArn}' because it's status is not 'RUNNING'. Current status is '${service.Status}'.`,
               );
             }
             log(`Pausing AWS App Runner service '${service.ServiceArn}'`);
