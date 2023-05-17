@@ -6,11 +6,21 @@ import * as lambdaNodeJS from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 
 export interface AwsAppRunnerSchedulerProps {
+  /**
+   * Tag used to match AWS App Runner services against. All matching services
+   * will be paused/resumed on the schedule defined by `pauseCronOptions` and `resumeCronOptions`
+   */
   serviceTag: {
     key: string;
     value: string;
   };
+  /**
+   * Cron configuration for when to pause the AWS App Runner service(s) matching `serviceTag`
+   */
   pauseCronOptions: events.CronOptions;
+  /**
+   * Cron configuration for when to resume the AWS App Runner service(s) matching `serviceTag`
+   */
   resumeCronOptions: events.CronOptions;
 }
 
