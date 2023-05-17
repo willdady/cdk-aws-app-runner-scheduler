@@ -15,7 +15,7 @@ npm install
 ## Deployment
 
 ```
-npm run cdk -- deploy AwsAppRunnerSchedulerStack
+npm run cdk -- deploy AwsAppRunnerScheduler
 ```
 
 ## Usage
