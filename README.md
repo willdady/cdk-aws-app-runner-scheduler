@@ -43,3 +43,16 @@ For example, the following will pause ALL AWS App Runner services tagged with ke
 
 Note, cron options are in **UTC time** *not* your local time.
 Also, `serviceTag.key` and `serviceTag.value` are **case-sensitive**.
+
+### SNS
+
+You may also optionally provide `snsTopic` to the `AwsAppRunnerScheduler` constructor to be notified when a service is paused and resumed.
+
+```typescript
+  const mySnsTopic = new sns.Topic(this, 'MySnsTopic');
+
+  new AwsAppRunnerScheduler(this, 'ExampleScheduler', {
+    ...,
+    snsTopic: mySnsTopic,
+  });
+```

@@ -4,10 +4,12 @@ import {
   ResumeServiceCommand,
   paginateListServices,
 } from '@aws-sdk/client-apprunner';
+import { PublishCommand, SNSClient } from '@aws-sdk/client-sns';
 
-const { SERVICE_TAG_KEY, SERVICE_TAG_VALUE } = process.env;
+const { SERVICE_TAG_KEY, SERVICE_TAG_VALUE, SNS_TOPIC_ARN } = process.env;
 
 const arClient = new AppRunnerClient({});
+const snsClient = new SNSClient({});
 
 export const handler = async () => {
   const servicesPaginator = paginateListServices({ client: arClient }, {});
@@ -30,6 +32,15 @@ export const handler = async () => {
             }
             log(`Resuming AWS App Runner service '${service.ServiceArn}'`);
             await resumeService(service.ServiceArn!);
+            if (SNS_TOPIC_ARN) {
+              log(
+                `Publishing status change message to SNS topic '${SNS_TOPIC_ARN}'`,
+              );
+              await publishSnsMessage({
+                serviceArn: service.ServiceArn!,
+                status: 'RUNNING',
+              });
+            }
             continue;
           }
         } catch (error) {
@@ -59,4 +70,23 @@ const log = (message: string) => {
 
 const err = (message: string) => {
   return console.error(JSON.stringify({ message }));
+};
+
+const publishSnsMessage = ({
+  status,
+  serviceArn,
+}: {
+  status: string;
+  serviceArn: string;
+}) => {
+  return snsClient.send(
+    new PublishCommand({
+      TopicArn: SNS_TOPIC_ARN!,
+      Subject: `AWS App Runner service '${serviceArn}' status change - ${status}`,
+      Message: [
+        `AWS App Runner service witn ARN '${serviceArn}' has had a scheduled status change.`,
+        `The new status is ${status}`,
+      ].join(' '),
+    }),
+  );
 };

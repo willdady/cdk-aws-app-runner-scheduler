@@ -4,6 +4,7 @@ import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as lambdaNodeJS from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as sns from 'aws-cdk-lib/aws-sns';
 
 export interface AwsAppRunnerSchedulerProps {
   /**
@@ -24,6 +25,10 @@ export interface AwsAppRunnerSchedulerProps {
    * Cron configuration for when to resume the AWS App Runner service(s) matching `serviceTag`
    */
   resumeCronOptions: events.CronOptions;
+  /**
+   * Optional SNS topic to publish pause/resume events to.
+   */
+  snsTopic?: sns.ITopic;
 }
 
 export class AwsAppRunnerScheduler extends Construct {
@@ -88,5 +93,18 @@ export class AwsAppRunnerScheduler extends Construct {
       schedule: events.Schedule.cron(props.resumeCronOptions),
       targets: [new targets.LambdaFunction(this.serviceResumerFunction)],
     });
+
+    if (props.snsTopic) {
+      props.snsTopic.grantPublish(this.servicePauserFunction);
+      props.snsTopic.grantPublish(this.serviceResumerFunction);
+      this.servicePauserFunction.addEnvironment(
+        'SNS_TOPIC_ARN',
+        props.snsTopic.topicArn,
+      );
+      this.serviceResumerFunction.addEnvironment(
+        'SNS_TOPIC_ARN',
+        props.snsTopic.topicArn,
+      );
+    }
   }
 }
