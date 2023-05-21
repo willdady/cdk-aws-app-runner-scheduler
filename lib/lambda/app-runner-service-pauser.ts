@@ -84,7 +84,7 @@ const publishSnsMessage = ({
       TopicArn: SNS_TOPIC_ARN!,
       Subject: `AWS App Runner service status change - ${status}`,
       Message: [
-        `AWS App Runner service witn ARN '${serviceArn}' has had a scheduled status change.`,
+        `AWS App Runner service with ARN '${serviceArn}' has had a scheduled status change.`,
         `The new status is ${status}`,
       ].join(' '),
     }),
