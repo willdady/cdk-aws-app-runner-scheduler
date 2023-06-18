@@ -3,6 +3,8 @@
 A reference AWS CDK application for scheduling the pausing and resuming of AWS App Runner services.
 Useful for dev environments where you want to pause AWS App Runner services out-of-hours to save money.
 
+![](images/app-runner-scheduler.drawio.png)
+
 ## Setup
 
 Install dependencies.
